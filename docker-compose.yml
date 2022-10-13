@@ -92,7 +92,7 @@ services:
     networks:
       - tailormap-viewer
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db/tailormap
+      SPRING_DATASOURCE_URL: jdbc:p6spy:postgresql://db/tailormap
       DB_PASSWORD: ${TAILORMAP_DB_PASSWORD:-tailormap}
       SENTRY_DSN: ${API_SENTRY_DSN:-}
       # Sample 20% of API requests for now.
