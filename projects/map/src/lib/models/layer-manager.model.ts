@@ -3,8 +3,10 @@ import { Vector as VectorLayer, Image as ImageLayer, Tile as TileLayer } from 'o
 import { ImageWMS, WMTS, XYZ, TileWMS } from 'ol/source';
 import { Geometry } from 'ol/geom';
 import { Feature } from 'ol';
+import type { Cesium3DTileset } from 'cesium';
 
 export type LayerTypes = VectorLayer<Feature<Geometry>> | TileLayer<TileWMS> | ImageLayer<ImageWMS> | TileLayer<XYZ> | TileLayer<WMTS> | null;
+export type LayerTypes3D = Promise<Cesium3DTileset>  | null;
 
 export interface LayerManagerModel {
   setBackgroundLayers(layers: LayerModel[]): void;
