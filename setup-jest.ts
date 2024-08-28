@@ -1,9 +1,36 @@
-import 'jest-preset-angular/setup-jest';
 import '@angular/localize/init';
 import './projects/app/src/polyfills';
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 import * as failOnConsole from 'jest-fail-on-console';
+import { getTestBed, TestBed } from '@angular/core/testing';
+import { ErrorHandler, NgModule, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+
+const testEnvironmentOptions = (globalThis as any).ngJest?.testEnvironmentOptions ?? Object.create(null);
+
+@NgModule({
+  providers: [
+    provideExperimentalZonelessChangeDetection(),
+    {
+      provide: ErrorHandler,
+      useValue: {
+        handleError: (e: any) => {
+          throw e;
+        },
+      },
+    },
+  ],
+})
+export class TestModule {}
+
+getTestBed().initTestEnvironment(
+  [ BrowserDynamicTestingModule, TestModule ],
+  platformBrowserDynamicTesting(),
+  testEnvironmentOptions,
+);
+
+TestBed.configureTestingModule({  providers: [provideExperimentalZonelessChangeDetection()] });
 
 failOnConsole();
 
